@@ -696,6 +696,212 @@
           font-size: 2rem;
         }
       }
+
+      /* ================= CHATBOX WIDGET ================= */
+      .chat-widget {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 9999;
+      }
+
+      .chat-toggle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+        transition: var(--transition);
+      }
+
+      .chat-toggle:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 25px rgba(37, 99, 235, 0.5);
+      }
+
+      .chat-toggle i {
+        font-size: 1.5rem;
+        color: var(--light);
+        transition: var(--transition);
+      }
+
+      .chat-toggle .fa-times {
+        display: none;
+      }
+
+      .chat-toggle.active .fa-comment {
+        display: none;
+      }
+
+      .chat-toggle.active .fa-times {
+        display: block;
+      }
+
+      .chat-window {
+        position: absolute;
+        bottom: 80px;
+        right: 0;
+        width: 350px;
+        height: 450px;
+        background: var(--card-bg);
+        border-radius: var(--border-radius);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        animation: slideUp 0.3s ease;
+      }
+
+      .chat-window.active {
+        display: flex;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .chat-header {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .chat-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .chat-avatar i {
+        font-size: 1.2rem;
+        color: var(--light);
+      }
+
+      .chat-header-info h4 {
+        font-size: 1rem;
+        color: var(--light);
+      }
+
+      .chat-header-info p {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .chat-messages {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .message {
+        max-width: 80%;
+        padding: 12px 15px;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .message.bot {
+        background: rgba(14, 165, 233, 0.15);
+        color: var(--light);
+        align-self: flex-start;
+        border-bottom-left-radius: 5px;
+      }
+
+      .message.user {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: var(--light);
+        align-self: flex-end;
+        border-bottom-right-radius: 5px;
+      }
+
+      .message .time {
+        font-size: 0.7rem;
+        opacity: 0.7;
+        margin-top: 5px;
+      }
+
+      .chat-input-area {
+        padding: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        gap: 10px;
+      }
+
+      .chat-input-area input {
+        flex: 1;
+        padding: 12px 15px;
+        border-radius: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--light);
+        font-size: 0.9rem;
+      }
+
+      .chat-input-area input:focus {
+        outline: none;
+        border-color: var(--secondary);
+      }
+
+      .chat-input-area input::placeholder {
+        color: var(--gray);
+      }
+
+      .chat-send-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+      }
+
+      .chat-send-btn:hover {
+        transform: scale(1.1);
+      }
+
+      .chat-send-btn i {
+        color: var(--light);
+        font-size: 1rem;
+      }
+
+      @media (max-width: 480px) {
+        .chat-window {
+          width: 300px;
+          height: 400px;
+          right: -10px;
+        }
+
+        .chat-widget {
+          bottom: 20px;
+          right: 20px;
+        }
+      }
     </style>
   </head>
 
@@ -1234,6 +1440,37 @@
       </div>
     </footer>
 
+    <!-- ================= CHATBOX WIDGET ================= -->
+    <div class="chat-widget">
+      <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+          <div class="chat-avatar">
+            <i class="fas fa-robot"></i>
+          </div>
+          <div class="chat-header-info">
+            <h4>Bhavan DG</h4>
+            <p>AI Assistant</p>
+          </div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <div class="message bot">
+            Hi there! 👋 I'm Bhavan's AI assistant. How can I help you today?
+            <div class="time">Just now</div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" id="chatInput" placeholder="Type your message..." />
+          <button class="chat-send-btn" id="chatSendBtn">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+      <button class="chat-toggle" id="chatToggle">
+        <i class="fas fa-comment"></i>
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
     <!-- ================= JAVASCRIPT ================= -->
     <script>
       // Create animated particles in the hero section
@@ -1322,6 +1559,125 @@
               behavior: "smooth",
             });
           });
+        });
+
+        // ================= CHATBOX FUNCTIONALITY =================
+        const chatToggle = document.getElementById("chatToggle");
+        const chatWindow = document.getElementById("chatWindow");
+        const chatInput = document.getElementById("chatInput");
+        const chatSendBtn = document.getElementById("chatSendBtn");
+        const chatMessages = document.getElementById("chatMessages");
+
+        // Toggle chat window
+        chatToggle.addEventListener("click", function () {
+          chatWindow.classList.toggle("active");
+          chatToggle.classList.toggle("active");
+          if (chatWindow.classList.contains("active")) {
+            chatInput.focus();
+          }
+        });
+
+        // Send message function
+        function sendMessage() {
+          const message = chatInput.value.trim();
+          if (message === "") return;
+
+          // Add user message
+          addMessage(message, "user");
+          chatInput.value = "";
+
+          // Simulate bot response
+          setTimeout(() => {
+            const botResponse = getBotResponse(message);
+            addMessage(botResponse, "bot");
+          }, 1000);
+        }
+
+        // Add message to chat
+        function addMessage(text, sender) {
+          const messageDiv = document.createElement("div");
+          messageDiv.classList.add("message", sender);
+          
+          const time = new Date();
+          const timeString = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          
+          messageDiv.innerHTML = `${text}<div class="time">${timeString}</div>`;
+          chatMessages.appendChild(messageDiv);
+          
+          // Scroll to bottom
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Get bot response based on user input
+        function getBotResponse(input) {
+          input = input.toLowerCase();
+          
+          const responses = {
+            greeting: [
+              "Hello! How can I help you today?",
+              "Hi there! Great to see you! What can I assist you with?",
+              "Hey! How can I be of service?"
+            ],
+            about: [
+              "Bhavan DG is a Cloud & AI Specialist with expertise in designing scalable cloud infrastructure and building intelligent AI systems. He has completed 25+ projects and holds 5 certifications.",
+              "Bhavan DG specializes in Cloud Architecture, AI Development, Web Development, and Data Engineering. He's based in Bangalore, India."
+            ],
+            services: [
+              "Bhavan offers the following services:\n• Cloud Architecture - Design and implementation of scalable cloud infrastructure\n• AI Solutions - Custom AI models and machine learning systems\n• Data Analytics - Transforming data into actionable insights\n• Web Development - Building responsive, high-performance web applications"
+            ],
+            contact: [
+              "You can reach Bhavan DG at:\n• Email: contact@bhavandg.com\n• Phone: +91 98765 43210\n• Location: Bangalore, India"
+            ],
+            projects: [
+              "Bhavan has worked on several major projects including:\n• Enterprise Cloud Migration - 40% cost savings\n• Predictive Maintenance System - 35% reduction in equipment downtime\n• E-commerce Analytics Platform - Processing 1M+ events daily"
+            ],
+            skills: [
+              "Bhavan's technical skills include:\n• Cloud: AWS (92%), OCI (88%), Azure (85%)\n• AI/ML: TensorFlow (90%), PyTorch (85%), NLP (82%)\n• Web: React (94%), Node.js (90%), Vue.js (87%)\n• Data: SQL (93%), MongoDB (88%), BigQuery (85%)"
+            ],
+            default: [
+              "Thanks for your message! To get more details, you can:\n• Check out the About section\n• View the Services offered\n• Use the Contact form to reach out directly",
+              "That's interesting! Feel free to ask about Bhavan's services, skills, projects, or how to get in touch.",
+              "I'd be happy to help you learn more! What would you like to know more about?"
+            ]
+          };
+
+          // Check for keywords and return appropriate response
+          if (input.includes("hello") || input.includes("hi") || input.includes("hey") || input.includes("greeting")) {
+            return responses.greeting[Math.floor(Math.random() * responses.greeting.length)];
+          }
+          if (input.includes("about") || input.includes("who") || input.includes("bio")) {
+            return responses.about[Math.floor(Math.random() * responses.about.length)];
+          }
+          if (input.includes("service") || input.includes("offer") || input.includes("do you do")) {
+            return responses.services[Math.floor(Math.random() * responses.services.length)];
+          }
+          if (input.includes("contact") || input.includes("email") || input.includes("phone") || input.includes("reach")) {
+            return responses.contact[Math.floor(Math.random() * responses.contact.length)];
+          }
+          if (input.includes("project") || input.includes("work") || input.includes("portfolio")) {
+            return responses.projects[Math.floor(Math.random() * responses.projects.length)];
+          }
+          if (input.includes("skill") || input.includes("tech") || input.includes("technology") || input.includes("expert")) {
+            return responses.skills[Math.floor(Math.random() * responses.skills.length)];
+          }
+          if (input.includes("thank")) {
+            return "You're welcome! Is there anything else you'd like to know?";
+          }
+          if (input.includes("bye") || input.includes("goodbye") || input.includes("see you")) {
+            return "Thank you for chatting! Feel free to reach out anytime. Have a great day!";
+          }
+          
+          return responses.default[Math.floor(Math.random() * responses.default.length)];
+        }
+
+        // Send button click
+        chatSendBtn.addEventListener("click", sendMessage);
+
+        // Enter key to send
+        chatInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            sendMessage();
+          }
         });
       });
     </script>
